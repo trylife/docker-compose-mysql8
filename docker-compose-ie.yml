@@ -1,0 +1,27 @@
+version: '2.1'
+
+services:
+  mysql:
+    image: mysql:8
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_HOST=%
+    volumes:
+      - ${PWD}/mysql/data:/var/lib/mysql
+      - ${PWD}/mysql/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ${PWD}/mysql/log:/var/log/mysql
+    ports:
+      - 11100:3306
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+  adminer:
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - 11101:8080
+    image: adminer
+    restart: always
